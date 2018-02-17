@@ -46,6 +46,7 @@ public class Main {
                         <li>id of the second node</li>
                     </ul>
      * @throws ImportException - if the .dot file is not well-formed
+     * @throws IllegalArgumentException - if there are not enough arguments or if the ids are invalid
      */
     public static void main(String[] args) throws ImportException {
         if (args == null || args.length < 3){
