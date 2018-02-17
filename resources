@@ -1,0 +1,22 @@
+1
+digraph  GOT{
+2
+graph[bgcolor=whitesmoke]
+3
+subgraph  cluster_stark {
+4
+style=filled;
+5
+color=lightblue;
+6
+label="House  Stark";
+7
+node [style=filled ,color=white];
+8
+Rickard;
+9
+Brandon; Eddard; Benjen; Lyanna;
+10
+Robb; Sansa; Arya; Brandon; Rickon;
+11
+node [shape=doublecirc

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# In order to see warnings remove -q
+mvn compile -q
