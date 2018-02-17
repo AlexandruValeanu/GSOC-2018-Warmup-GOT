@@ -3,10 +3,7 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.io.*;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +15,7 @@ public class Main {
         private String id;
         private Map<String, Attribute> map;
 
-        public Node(String id, Map<String, Attribute> map) {
+        Node(String id, Map<String, Attribute> map) {
             this.id = id;
             this.map = map;
         }
@@ -36,20 +33,31 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws IOException, ImportException {
+    /**
+     * Takes a graph (as a .dot file) and two ids (corresponding to valid nodes from the graph) and
+     * computes the lowest common ancestor(s) of those two nodes.
+     *
+     * The result is printed to standard output.
+     *
+     * @param args array that contains the three arguments:
+     *             <ul>
+                        <li>name of the .dot file that contains the graph</li>
+                        <li>id of the first node</li>
+                        <li>id of the second node</li>
+                    </ul>
+     * @throws ImportException - if the .dot file is not well-formed
+     */
+    public static void main(String[] args) throws ImportException {
         if (args == null || args.length < 3){
             throw new IllegalArgumentException("not enough arguments: expected <file-name> <id1> <id2>");
         }
-
-        // read the whole .dot file into string 'text'
-        String text = new String(Files.readAllBytes(Paths.get(args[0])), StandardCharsets.UTF_8);
 
         VertexProvider<Node> vp = Node::new;
         EdgeProvider<Node, DefaultEdge> ep = (f, t, l, a) -> new DefaultEdge();
 
         GraphImporter<Node, DefaultEdge> importer = new DOTImporter<>(vp, ep);
         SimpleDirectedGraph<Node, DefaultEdge> graph = new SimpleDirectedGraph<>(DefaultEdge.class);
-        importer.importGraph(graph, new StringReader(text));
+        importer.importGraph(graph, new File(Paths.get(args[0]).toUri()));
 
         final String A = args[1];
         final String B = args[2];
