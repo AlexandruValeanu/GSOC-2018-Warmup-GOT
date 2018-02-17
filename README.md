@@ -8,14 +8,18 @@ Implementation for the task described in [this page](https://github.com/jgrapht/
 git clone https://github.com/AlexandruValeanu/GSOC-2018-Warmup-GOT.git
 ```
 
-### Compiling the code
+### Making the two scripts executable
 ```
 chmod +x compile-me
+chmod +x run-me
+```
+
+### Compiling the code
+```
 bash compile-me
 ```
 ### Running the code
 ```
-chmod +x run-me
 bash run-me got.dot Sansa Arya
 ```
 
