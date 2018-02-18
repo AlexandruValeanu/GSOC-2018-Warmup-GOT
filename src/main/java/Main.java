@@ -1,5 +1,8 @@
+import org.jgrapht.Graph;
+import org.jgrapht.alg.CycleDetector;
 import org.jgrapht.alg.NaiveLcaFinder;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DirectedPseudograph;
 import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.io.*;
 
@@ -46,7 +49,7 @@ public class Main {
                         <li>id of the second node</li>
                     </ul>
      * @throws ImportException - if the .dot file is not well-formed
-     * @throws IllegalArgumentException - if there are not enough arguments or if any id is invalid
+     * @throws IllegalArgumentException - if there are not enough arguments or if any id is invalid or if the graph contains cycles
      */
     public static void main(String[] args) throws ImportException {
         if (args == null || args.length < 3){
@@ -57,8 +60,14 @@ public class Main {
         EdgeProvider<Node, DefaultEdge> ep = (f, t, l, a) -> new DefaultEdge();
 
         GraphImporter<Node, DefaultEdge> importer = new DOTImporter<>(vp, ep);
-        SimpleDirectedGraph<Node, DefaultEdge> graph = new SimpleDirectedGraph<>(DefaultEdge.class);
+        DirectedPseudograph<Node, DefaultEdge> graph = new DirectedPseudograph<>(DefaultEdge.class);
         importer.importGraph(graph, new File(Paths.get(args[0]).toUri()));
+
+        CycleDetector<Node, DefaultEdge> cycleDetector = new CycleDetector<>(graph);
+        if (cycleDetector.detectCycles()){
+            System.err.println("cycle: " + cycleDetector.findCycles());
+            throw new IllegalArgumentException("input graph contains a cycle");
+        }
 
         final String A = args[1];
         final String B = args[2];

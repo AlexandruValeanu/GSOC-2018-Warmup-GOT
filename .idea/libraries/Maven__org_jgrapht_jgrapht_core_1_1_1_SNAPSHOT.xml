@@ -8,6 +8,7 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/jgrapht/jgrapht-core/1.1.1-SNAPSHOT/jgrapht-core-1.1.1-20180216.160736-26-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/jgrapht/jgrapht-core/1.1.1-SNAPSHOT/jgrapht-core-1.1.1-20171115.010846-1.jar!/" />
     </SOURCES>
   </library>
 </component>
